@@ -1,0 +1,71 @@
+{% extends "base.html" %} {% block title %}Edit Car{% endblock %} {% block
+content %}
+<h1>Edit Car</h1>
+<form method="POST" action="/edit_car/{{ car.id }}/">
+  <div class="form-group">
+    <label for="number">Number</label>
+    <input
+      type="text"
+      class="form-control"
+      id="number"
+      name="number"
+      value="{{ car.number }}"
+      required
+    />
+  </div>
+  <div class="form-group">
+    <label for="description">Description</label>
+    <input
+      class="form-control"
+      type="text"
+      value="{{ car.description }}"
+      id="description"
+      name="description"
+      required
+    />
+  </div>
+  <div class="form-group">
+    <label for="img">Image URL</label>
+    <input
+      type="url"
+      class="form-control"
+      id="img"
+      name="img"
+      value="{{ car.img }}"
+      required
+    />
+  </div>
+  <div class="form-group form-check">
+    <input
+      type="checkbox"
+      class="form-check-input"
+      id="urgent"
+      name="urgent"
+      {%
+      if
+      car.urgent
+      %}checked{%
+      endif
+      %}
+    />
+    <label class="form-check-label" for="urgent">Urgent</label>
+  </div>
+  <div class="form-group">
+    <label for="problems">Problems</label>
+    <div id="problems">
+      {% for problem in all_problems %}
+      <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="{{ problem['id'] }}"
+        name="problems" value="{{ problem['id'] }}" {% if problem['id'] in
+        current_problems %}checked{% endif %} />
+        <label class="form-check-label" for="problem{{ problem['id'] }}"
+          >{{ problem['represent'] }}
+        </label>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary mt-3">Update Car</button>
+</form>
+{% endblock %}

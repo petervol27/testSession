@@ -1,0 +1,36 @@
+{% extends "base.html" %} {% block title %}Car List{% endblock %} {% block
+content %}
+<h1>Car List</h1>
+<ul class="list-group">
+  {% for car in cars %}
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    <div class="d-flex align-items-start">
+      <img
+        src="{{ car.img }}"
+        alt="{{ car.description}}"
+        style="width: 100px; height: auto; margin-right: 15px"
+      />
+      <div>
+        <h5>{{ car.number }}</h5>
+        <p>{{ car.description }}</p>
+        <a href="/delete/{{car.id}}/" class="btn btn-danger">Delete</a>
+        <a href="/edit_car/{{car.id}}/" class="btn btn-primary">Edit Car</a>
+        {% if car.urgent %}
+        <p class="alert alert-danger mt-3">Urgent</p>
+        {% endif %} {% if car.problems %}
+        <h6>Problems:</h6>
+        <ul>
+          {% for problem in car.problems %}
+          <li>{{ problem }}</li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <p>No problems listed.</p>
+        {% endif %}
+      </div>
+    </div>
+    <span class="badge badge-primary badge-pill">{{ loop.index }}</span>
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}
